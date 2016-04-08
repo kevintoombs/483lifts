@@ -1,6 +1,8 @@
 -module(lift).
 -export([newLift/1]).
 
+-import(stopAt, [stopAt/3]).
+
 % Code for the lift agents. Things to think about:
 % Challenge: does the process always have sufficient information
 % e.g. about the floor agents so it can send the messages it needs to send.
@@ -8,12 +10,14 @@ liftProcess({request, FloorNum, FloorAgent, Direction}, {Now, Stoplist}) ->
     NewStoplist = Stoplist, % you have to compute this right
     {Now, NewStoplist}
 ;
+
 % stop messages are received from the buttons inside the lift
 % for our simulation they will be sent directly from the command line to the lift process
 liftProcess({stop, FloorNum}, {Now, Stoplist}) ->
-    NewStoplist = Stoplist, % you have to compute this right
+    NewStoplist = stopAt(Stoplist, Now, FloorNum),
     {Now, NewStoplist}
 ;
+
 % arrived messages come from the Cabin agent that runs the lift cabin up and 
 % down in its shaft. The lift agent should respond with an up, down, stop or wait message
 % depending on what the lift needs to do next. Send stop if the lift should stop on this floor,
