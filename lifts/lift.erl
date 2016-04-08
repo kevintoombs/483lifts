@@ -2,12 +2,13 @@
 -export([newLift/1]).
 
 -import(stopAt, [stopAt/3]).
+-import(insert, [insert/4]).
 
 % Code for the lift agents. Things to think about:
 % Challenge: does the process always have sufficient information
 % e.g. about the floor agents so it can send the messages it needs to send.
 liftProcess({request, FloorNum, FloorAgent, Direction}, {Now, Stoplist}) ->
-    NewStoplist = Stoplist, % you have to compute this right
+    NewStoplist = insert(Stoplist, Now, Direction, FloorNum),
     {Now, NewStoplist}
 ;
 
