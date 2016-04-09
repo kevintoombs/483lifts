@@ -1,4 +1,4 @@
--module(lift).
+  -module(lift).
 -export([newLift/1]).
 
 -import(stopAt, [stopAt/3]).
